@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+  lang="ja"
+  th:fragment="siteHeader"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <h1 class="header-title" th:text="${pageTitle}"></h1>
+
+      <!-- 未ログインの場合表示 -->
+      <button
+        sec:authorize="isAnonymous()"
+        class="loginout-btn"
+        onclick="location.href='/login'"
+      >
+        ログイン
+      </button>
+
+      <!-- ログイン中にのみ表示 -->
+      <button
+        sec:authorize="isAuthenticated()"
+        class="loginout-btn"
+        onclick="location.href='/logout'"
+      >
+        ログアウト
+      </button>
+    </header>
+
+    <!-- サイドメニュー本体 -->
+    <nav class="side-menu" id="sideMenu">
+      <ul>
+        <li><a href="/onsen/list">TOP</a></li>
+        <li><a href="/favorite/list">お気に入り温泉一覧</a></li>
+        <li><a href="/onsen/manager">管理者ページ</a></li>
+
+        <!-- 未ログインの場合表示 -->
+        <li sec:authorize="isAnonymous()">
+          <a href="/login">ログイン</a>
+        </li>
+
+        <!-- ログイン中にのみ表示 -->
+        <li sec:authorize="isAuthenticated()">
+          <a href="/logout">ログアウト</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- 背景の黒幕 -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <script th:src="@{/js/menu.js}"></script>
+  </body>
+</html>

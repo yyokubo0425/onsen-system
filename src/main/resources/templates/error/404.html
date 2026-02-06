@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ページが見つかりません</title>
+    <link rel="stylesheet" th:href="@{/css/error.css}" />
+    <!-- Webアプリのロゴ設定 -->
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+
+    <!-- スマホ用 -->
+    <link
+      rel="apple-touch-icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+  </head>
+  <body>
+    <div class="error-card">
+      <div class="error-code">404</div>
+      <div class="error-title">ページが見つかりません</div>
+      <div class="error-message" th:text="${errorMessage}"></div>
+      <a class="error-btn" href="/onsen/list">トップへ戻る</a>
+    </div>
+
+    <!-- ロード中 -->
+    <div
+      id="loading-screen"
+      style="display: none; opacity: 0; visibility: hidden"
+    >
+      <div class="loading-wrapper">
+        <p id="loadingWave" class="loading-wave">Loading...</p>
+      </div>
+    </div>
+    <script th:src="@{/js/loader.js}"></script>
+  </body>
+</html>

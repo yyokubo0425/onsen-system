@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>編集 - 温泉管理</title>
+    <link rel="stylesheet" th:href="@{/css/new.css}" />
+    <!-- Webアプリのロゴ設定 -->
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+
+    <!-- スマホ用 -->
+    <link
+      rel="apple-touch-icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+  </head>
+  <body>
+    <!-- 共通ヘッダー読み込み -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+    <main class="main-container">
+      <form
+        th:object="${onsenForm}"
+        class="onsen-form"
+        enctype="multipart/form-data"
+        method="post"
+        th:action="@{'/onsen/manager/update/' + ${onsenForm.id}}"
+      >
+        <label>温泉名</label>
+        <input th:field="*{name}" type="text" />
+
+        <label>都道府県</label>
+        <input th:field="*{prefecture}" type="text" />
+
+        <label>順位</label>
+        <input th:field="*{rank}" type="number" />
+
+        <label>説明</label>
+        <textarea rows="5" th:field="*{description}"></textarea>
+
+        <!-- 画像１ -->
+        <div class="image-block">
+          <div class="image-block-title">画像１</div>
+
+          <label class="sub-label">現在の画像１</label>
+          <div class="current-image">
+            <img th:src="${onsen.image1}" alt="画像1" class="preview-img" />
+          </div>
+
+          <label class="sub-label">画像１（変更する場合は選択）</label>
+          <input name="image1" type="file" />
+        </div>
+
+        <!-- 画像２ -->
+        <div class="image-block">
+          <div class="image-block-title">画像２</div>
+
+          <label class="sub-label">現在の画像２</label>
+          <div class="current-image">
+            <img th:src="${onsen.image2}" alt="画像2" class="preview-img" />
+          </div>
+
+          <label class="sub-label">画像２（変更する場合は選択）</label>
+          <input name="image2" type="file" />
+        </div>
+
+        <!-- 画像３ -->
+        <div class="image-block">
+          <div class="image-block-title">画像３</div>
+
+          <label class="sub-label">現在の画像３</label>
+          <div class="current-image">
+            <img th:src="${onsen.image3}" alt="画像3" class="preview-img" />
+          </div>
+
+          <label class="sub-label">画像３（変更する場合は選択）</label>
+          <input name="image3" type="file" />
+        </div>
+
+        <!-- 画像４ -->
+        <div class="image-block">
+          <div class="image-block-title">画像４</div>
+
+          <label class="sub-label">現在の画像４</label>
+          <div class="current-image">
+            <img th:src="${onsen.image4}" alt="画像4" class="preview-img" />
+          </div>
+
+          <label class="sub-label">画像４（変更する場合は選択）</label>
+          <input name="image4" type="file" />
+        </div>
+
+        <div class="save-actions">
+          <a class="btn-back" href="/onsen/manager">← 温泉管理へ戻る</a>
+          <button
+            class="btn-save"
+            type="submit"
+            onclick="this.disabled = true; this.form.submit()"
+          >
+            完了する
+          </button>
+        </div>
+      </form>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- ロード中 -->
+    <div
+      id="loading-screen"
+      style="display: none; opacity: 0; visibility: hidden"
+    >
+      <div class="loading-wrapper">
+        <p id="loadingWave" class="loading-wave">Loading...</p>
+      </div>
+    </div>
+    <script th:src="@{/js/loader.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新規登録 - 温泉管理</title>
+    <link rel="stylesheet" th:href="@{/css/new.css}" />
+    <!-- Webアプリのロゴ設定 -->
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+
+    <!-- スマホ用 -->
+    <link
+      rel="apple-touch-icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+  </head>
+  <body>
+    <!-- 共通ヘッダー読み込み -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+    <main class="main-container">
+      <form
+        th:object="${onsenForm}"
+        class="onsen-form"
+        enctype="multipart/form-data"
+        method="post"
+        th:action="@{/onsen/manager/create}"
+      >
+        <label>温泉名</label>
+        <input th:field="*{name}" required type="text" />
+
+        <label>都道府県</label>
+        <input th:field="*{prefecture}" required type="text" />
+
+        <label>順位</label>
+        <input th:field="*{rank}" required type="number" />
+
+        <label>説明</label>
+        <textarea th:field="*{description}" required rows="5"></textarea>
+
+        <!-- 画像１ -->
+        <div class="image-block">
+          <div class="image-block-title">画像１</div>
+          <input th:field="*{image1}" required type="file" />
+        </div>
+
+        <!-- 画像２ -->
+        <div class="image-block">
+          <div class="image-block-title">画像2</div>
+          <input th:field="*{image2}" required type="file" />
+        </div>
+
+        <!-- 画像３ -->
+        <div class="image-block">
+          <div class="image-block-title">画像3</div>
+          <input th:field="*{image3}" required type="file" />
+        </div>
+
+        <!-- 画像４ -->
+        <div class="image-block">
+          <div class="image-block-title">画像4</div>
+          <input th:field="*{image4}" required type="file" />
+        </div>
+
+        <div class="save-actions">
+          <a class="btn-back" href="/onsen/manager">← 温泉管理へ戻る</a>
+          <button
+            class="btn-save"
+            type="submit"
+            onclick="this.disabled = true; this.form.submit();"
+          >
+            登録する
+          </button>
+        </div>
+      </form>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- ロード中 -->
+    <div
+      id="loading-screen"
+      style="display: none; opacity: 0; visibility: hidden"
+    >
+      <div class="loading-wrapper">
+        <p id="loadingWave" class="loading-wave">Loading...</p>
+      </div>
+    </div>
+    <script th:src="@{/js/loader.js}"></script>
+  </body>
+</html>

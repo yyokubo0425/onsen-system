@@ -1,0 +1,182 @@
+/* スマホ基本レイアウト */
+html,
+body {
+  background-image: url("https://res.cloudinary.com/dqtfx88ou/image/upload/v1764144702/%E8%83%8C%E6%99%AF_ubffoq.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  margin-top: 150px;
+  padding-bottom: 60px;
+}
+
+/* 0件メッセージ */
+.no-favorite {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+/* 温泉カード */
+.favorite-card {
+  width: 95%;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  background-color: #fff;
+  position: relative;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ♡ ハート位置 */
+.fav-area {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+.btn-fav {
+  all: unset;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  fill: #ff7a90;
+  stroke: #ff7a90;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-fav:hover svg {
+  fill: #fff;
+  stroke: #ff7a90;
+  transform: scale(1.15);
+}
+
+/* テキスト（pref/name中央寄せ） */
+.pref {
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.description {
+  width: 90%;
+  margin: 0 auto 15px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* 画像（TOP と完全一致） */
+.fav-left img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ロードアイコン */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+
+.loading-wave {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2b7a4b;
+  letter-spacing: 2px;
+}
+
+.loading-wave span {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+/************************************
+  PC レイアウト（TOP と完全一致）
+************************************/
+@media (min-width: 768px) {
+  .main-container {
+    margin-top: 120px;
+  }
+
+  .favorite-card {
+    max-width: 1100px;
+    padding: 50px 40px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 40px;
+    row-gap: 20px;
+    align-items: center;
+  }
+
+  /* 画像：左カラム */
+  .fav-left {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .fav-left img {
+    width: 260px;
+    height: 170px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  /* テキスト：右カラム */
+  .fav-right {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  /* 説明文：右カラムの下段 */
+  .description {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* ♡：絶対位置 */
+  .fav-area {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+
+  .btn-fav {
+    width: 40px;
+    height: 40px;
+  }
+}

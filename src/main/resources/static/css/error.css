@@ -1,0 +1,118 @@
+body {
+  background-image: url("https://res.cloudinary.com/dqtfx88ou/image/upload/v1764144702/%E8%83%8C%E6%99%AF_ubffoq.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans JP", sans-serif;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* カード */
+.error-card {
+  width: 90%;
+  max-width: 360px;
+  background-color: #fff;
+  padding: 28px 22px;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* 403 */
+.error-code {
+  font-size: 64px;
+  font-weight: bold;
+  color: #2a9d6f;
+  margin-bottom: 16px;
+}
+
+/* タイトル */
+.error-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.error-message {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 28px;
+}
+
+/* ボタン */
+.error-btn {
+  display: inline-block;
+  background-color: #2a9d6f;
+  color: white;
+  padding: 14px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 14px rgba(42, 157, 111, 0.25);
+}
+
+.error-btn:hover {
+  opacity: 0.9;
+}
+
+/* ロードアイコン */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+
+.loading-wave {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2b7a4b;
+  letter-spacing: 2px;
+}
+
+.loading-wave span {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+@media (min-width: 768px) {
+  .error-card {
+    max-width: 480px;
+    padding: 40px 34px;
+    border-radius: 20px;
+  }
+
+  .error-code {
+    font-size: 90px;
+    margin-bottom: 20px;
+  }
+
+  .error-title {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .error-message {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  .error-btn {
+    font-size: 18px;
+    padding: 16px 24px;
+  }
+}

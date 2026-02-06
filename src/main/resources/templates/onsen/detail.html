@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${onsen.name} + ' - 温泉詳細'">温泉詳細</title>
+    <link rel="stylesheet" th:href="@{/css/detail.css}" />
+    <!-- Webアプリのロゴ設定 -->
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+
+    <!-- スマホ用 -->
+    <link
+      rel="apple-touch-icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+  </head>
+  <body>
+    <!-- 共通ヘッダー読み込み -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+    <main class="main-container">
+      <section class="detail-anim-container">
+        <section class="info-section">
+          <!-- 上段：順位/都道府県 -->
+          <div class="top-row">
+            <h2 class="rank" th:text="${onsen.rank} + '位'"></h2>
+            <p class="pref" th:text="${onsen.prefecture}"></p>
+          </div>
+
+          <h3 class="name" th:text="${onsen.name}"></h3>
+
+          <p class="description" th:text="${onsen.description}"></p>
+        </section>
+        <!-- 画像部分 -->
+        <section class="images-grid">
+          <img alt="画像1" th:src="${onsen.image1}" />
+          <img alt="画像2" th:src="${onsen.image2}" />
+          <img alt="画像3" th:src="${onsen.image3}" />
+          <img alt="画像4" th:src="${onsen.image4}" />
+        </section>
+
+        <!-- ボタン部分 -->
+        <section class="detail-actions">
+          <a class="btn-back" href="/onsen/list">← TOPへ戻る</a>
+          <form th:action="@{/favorite/add}" method="post" class="fav-form">
+            <input type="hidden" name="onsenId" th:value="${onsen.id}" />
+            <input
+              type="hidden"
+              name="redirect"
+              th:value="'/onsen/detail/{id}(id=${onsen.id})'"
+            />
+            <button type="button" class="btn-fav" aria-label="お気に入り">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M12 22
+                   L10.2 20.2
+                   C5 15.2 2 12 2 8.2
+                   C2 4.8 4.6 2.8 7.3 2.8
+                   C9 2.8 10.8 3.7 12 5.4
+                   C13.2 3.7 15 2.8 16.7 2.8
+                   C19.4 2.8 22 4.8 22 8.2
+                   C22 12 19 15.2 13.8 20.2
+                   L12 22Z"
+                />
+              </svg>
+            </button>
+          </form>
+        </section>
+      </section>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- ロード中 -->
+    <div
+      id="loading-screen"
+      style="display: none; opacity: 0; visibility: hidden"
+    >
+      <div class="loading-wrapper">
+        <p id="loadingWave" class="loading-wave">Loading...</p>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll(".btn-fav").forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+          // 送信停止
+          e.preventDefault();
+
+          const form = btn.closest("form");
+          const card = btn.closest(".detail-anim-container");
+          const usableWidth = card.clientWidth + 100;
+          const cardHeight = card.clientHeight;
+          let count = 0;
+
+          //非同期処理
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+          });
+
+          //未ログイン時はSpring Securityがloginを返す
+          if (response.redirected) {
+            window.location.href = response.url;
+            return;
+          }
+
+          function showMessage(text) {
+            const container = document.querySelector(".main-container");
+            const div = document.createElement("div");
+
+            div.classList.add("fav-message");
+            div.textContent = text;
+            container.appendChild(div);
+
+            setTimeout(() => {
+              div.style.display = "block";
+            }, 10);
+
+            setTimeout(() => div.remove(), 1500);
+          }
+          if (response.status === 409) {
+            showMessage("すでに登録済みです");
+            return;
+          } else {
+            showMessage("❤️ お気に入りに登録しました！");
+          }
+
+          // 花びらアニメーション
+          const interval = setInterval(() => {
+            createHeart();
+            count++;
+
+            //120枚で終了
+            if (count > 500) clearInterval(interval);
+          }, 1);
+
+          function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+
+            heart.style.top = Math.random() * cardHeight + "px";
+            heart.style.setProperty("--moveX", usableWidth + "px");
+            heart.style.setProperty("--moveY", Math.random() * 80 - 40 + "px");
+            heart.style.setProperty("--rot", Math.random() * 360 + "deg");
+            heart.style.setProperty("--sway", Math.random() * 8 - 4 + "px");
+            heart.style.setProperty("--dur", 1.1 + Math.random() * 0.8 + "s");
+            heart.style.opacity = 0.5 + Math.random() * 0.5;
+
+            const colors = ["#ff7aa8", "#ff5f8f", "#ff8fb8", "#ff6fa0"];
+            heart.style.backgroundColor =
+              colors[Math.floor(Math.random() * colors.length)];
+
+            const size = 14 + Math.random() * 14;
+            heart.style.width = size + "px";
+            heart.style.height = size + "px";
+
+            card.append(heart);
+
+            setTimeout(() => heart.remove(), 2200);
+          }
+        });
+      });
+    </script>
+    <script th:src="@{/js/loader.js}"></script>
+  </body>
+</html>

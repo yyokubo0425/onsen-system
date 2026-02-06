@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>管理者ページ - 温泉一覧</title>
+    <link rel="stylesheet" th:href="@{/css/manager.css}" />
+    <!-- Webアプリのロゴ設定 -->
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+
+    <!-- スマホ用 -->
+    <link
+      rel="apple-touch-icon"
+      href="https://res.cloudinary.com/dqtfx88ou/image/upload/v1764137468/icon_fgxqed.png"
+    />
+  </head>
+  <body>
+    <!-- 共通ヘッダー読み込み -->
+    <div th:replace="fragments/header :: siteHeader"></div>
+
+    <main class="main-container">
+      <div class="top-action">
+        <a class="btn-new" href="/onsen/manager/new">＋新規登録</a>
+      </div>
+
+      <table class="onsentable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>順位</th>
+            <th>温泉名</th>
+            <th>都道府県</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="onsen: ${onsenList}">
+            <td data-label="ID" th:text="${onsen.id}"></td>
+            <td data-label="順位" th:text="${onsen.rank}"></td>
+            <td data-label="温泉名" th:text="${onsen.name}"></td>
+            <td data-label="都道府県" th:text="${onsen.prefecture}"></td>
+            <td data-label="操作">
+              <a
+                class="btn-edit"
+                th:href="@{'/onsen/manager/edit/' + ${onsen.id}}"
+                >編集</a
+              >
+
+              <form
+                method="post"
+                style="display: inline"
+                th:action="@{'/onsen/manager/delete/' + ${onsen.id}}"
+              >
+                <button
+                  class="btn-delete"
+                  onclick="return confirm('本当に削除しますか？');"
+                  type="submit"
+                >
+                  削除
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- ロード中 -->
+    <div
+      id="loading-screen"
+      style="display: none; opacity: 0; visibility: hidden"
+    >
+      <div class="loading-wrapper">
+        <p id="loadingWave" class="loading-wave">Loading...</p>
+      </div>
+    </div>
+    <script th:src="@{/js/loader.js}"></script>
+  </body>
+</html>
